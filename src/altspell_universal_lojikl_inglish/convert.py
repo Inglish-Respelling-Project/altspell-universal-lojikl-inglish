@@ -28,25 +28,25 @@ class Dictionary:
         self._populate_dict(fwd)
 
     def _populate_dict(self, fwd: bool):
-        file = files(data).joinpath('universal-lojikl-inglish-dict.csv').open('r')
+        with files(data).joinpath('universal-lojikl-inglish-dict.csv').open('r') as file:
 
-        for row in csv.reader(file):
-            tradspell = row[0]
-            uli = row[1]
+            for row in csv.reader(file):
+                tradspell = row[0]
+                uli = row[1]
 
-            if fwd:
-                pos = row[3]
-                if pos == '':
-                    pos = None
+                if fwd:
+                    pos = row[3]
+                    if pos == '':
+                        pos = None
 
-                self.dict[(tradspell, pos)] = uli
-            else:
-                self.dict[uli] = tradspell
+                    self.dict[(tradspell, pos)] = uli
+                else:
+                    self.dict[uli] = tradspell
 
-                alternates = row[2].split(';')
+                    alternates = row[2].split(';')
 
-                for alternate in alternates:
-                    self.dict[alternate] = tradspell
+                    for alternate in alternates:
+                        self.dict[alternate] = tradspell
 
 class Converter:
     # Load spaCy without any unnecessary components
