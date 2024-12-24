@@ -51,11 +51,11 @@ class Dictionary:
 class Converter:
     try:
         # Load spaCy without any unnecessary components
-        _nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
+        _nlp = spacy.load('en_core_web_sm', enable=['tokenizer', 'tagger'])
     except OSError:
         from spacy.cli import download
         download('en_core_web_sm')
-        _nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
+        _nlp = spacy.load('en_core_web_sm', enable=['tokenizer', 'tagger'])
 
     def __init__(self, fwd: bool):
         self._fwd = fwd
