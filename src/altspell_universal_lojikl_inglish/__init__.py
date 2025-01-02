@@ -18,15 +18,15 @@
 
 import threading
 from altspell.plugin import PluginBase
-from .convert import Converter
+from .convert import FwdConverter, RevConverter
 
 
 class Plugin(PluginBase):
     def __init__(self):
         self._lock = threading.Lock()
 
-        self._fwd_converter = Converter(fwd=True)
-        self._rev_converter = Converter(fwd=False)
+        self._fwd_converter = FwdConverter()
+        self._rev_converter = RevConverter()
 
     def convert_to_altspell(self, tradspell_text: str) -> str:
         # use a lock to make the function thread-safe
