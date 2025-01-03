@@ -16,28 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-import threading
 from altspell.plugin import PluginBase
 from .convert import FwdConverter, RevConverter
 
 
 class Plugin(PluginBase):
     def __init__(self):
-        self._lock = threading.Lock()
-
         self._fwd_converter = FwdConverter()
         self._rev_converter = RevConverter()
 
     def convert_to_altspell(self, tradspell_text: str) -> str:
-        # use a lock to make the function thread-safe
-        with self._lock:
-            para = self._fwd_converter.convert_para(tradspell_text)
-
-        return para
+        return self._fwd_converter.convert_para(tradspell_text)
 
     def convert_to_tradspell(self, altspell_text: str) -> str:
-        # use a lock to make the function thread-safe
-        with self._lock:
-            para = self._rev_converter.convert_para(altspell_text)
-
-        return para
+        return self._rev_converter.convert_para(altspell_text)
