@@ -18,8 +18,8 @@
 
 import csv
 from importlib.resources import files
+from altspell.plugin.PluginBase import nlp
 from . import data
-import spacy
 
 
 class FwdDictionary:
@@ -60,13 +60,7 @@ class RevDictionary:
                     self.dict[alternate] = tradspell
 
 class Converter:
-    try:
-        # Load spaCy without any unnecessary components
-        _nlp = spacy.load('en_core_web_sm', enable=['tokenizer', 'tagger'])
-    except OSError:
-        from spacy.cli import download
-        download('en_core_web_sm')
-        _nlp = spacy.load('en_core_web_sm', enable=['tokenizer', 'tagger'])
+    _nlp = nlp
 
 def _process_lowercase_key(token, key, dictionary, out_tokens):
     if token.text[0].isupper():
